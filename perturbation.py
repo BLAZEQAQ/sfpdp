@@ -32,24 +32,16 @@ def perturb_laplace(p, epsilon, K, Times, name, method):
 
     sortIndex_array = np.loadtxt('./Weights/{}/sortIndex.txt'.format(name), dtype=int, delimiter=' ')
 
-    C_dict = {'SFPDP_polblogs': (1e+18) * 4.4, 'SFPDP_terrorist': (1e+18)*2.94, 'SFPDP_cora': (1e+32) * 9.854,
-              'SFPDP_MMI_polblogs': (1e+4) * 4.1, 'SFPDP_MMI_terrorist': (1e+18) * 7.7, 'SFPDP_MMI_cora': (1e+18) * 4.2,
-              'SFPDP_LMLT_polblogs': (1e+15) * 3.87, 'SFPDP_LMLT_terrorist': (1e+32) * 9.854, 'SFPDP_LMLT_cora': (1e+18) * 4.2,}
-
-    # C_dict = {'SFPDP_polblogs': (1e+12) * 4.2, 'SFPDP_terrorist': (1e+18) * 2.94, 'SFPDP_cora': (1e+32) * 9.854,
-    #           'SFPDP_MMI_polblogs': (1e+2) * 4, 'SFPDP_MMI_terrorist': (1e+18) * 7.7, 'SFPDP_MMI_cora': (1e+18) * 4.2,
-    #           'SFPDP_LMLT_polblogs': (1e+11) * 5.67, 'SFPDP_LMLT_terrorist': (1e+32) * 9.854,
-    #           'SFPDP_LMLT_cora': (1e+18) * 4.2, }
-
+    
     A_preliminary = np.zeros((n, n))
 
 
     if method == 'SFPDP':
-        C_SFPDP = C_dict['{}_{}'.format(method, name.lower())]
+     
         weight_SFPDP = weights['SFPDP']
 
         scales_SFPDP = np.sum(np.sum(weight_SFPDP)) / epsilon
-        scales_SFPDP = scales_SFPDP / C_SFPDP
+        scales_SFPDP = scales_SFPDP
 
         noise_sample_SFPDP = np.zeros_like(A)
         for s in range(n):
@@ -63,7 +55,7 @@ def perturb_laplace(p, epsilon, K, Times, name, method):
         print('Noise ---- noises_SFPDP with max={} and min={}'.format(np.max(noise_sample_SFPDP), np.min(noise_sample_SFPDP)) )
 
     if method == 'SFPDP_MMI':
-        C_SFPDP_MMI = C_dict['{}_{}'.format(method, name.lower())]
+      
         weight_SFPDP_MMI = weights['SFPDP_MMI']
 
         weightSum_SFPDP_MMI = np.sum(np.sum(weight_SFPDP_MMI))
@@ -78,7 +70,7 @@ def perturb_laplace(p, epsilon, K, Times, name, method):
 
         scales_SFPDP_MMI_mask = np.isinf(scales_SFPDP_MMI)
         scales_SFPDP_MMI = np.where(scales_SFPDP_MMI_mask, 0, scales_SFPDP_MMI)
-        scales_SFPDP_MMI = scales_SFPDP_MMI/C_SFPDP_MMI
+        scales_SFPDP_MMI = scales_SFPDP_MMI
 
         noise_sample_SFPDP_MMI = np.zeros_like(A)
         for s in range(n):
@@ -92,7 +84,7 @@ def perturb_laplace(p, epsilon, K, Times, name, method):
                                                                       np.min(noise_sample_SFPDP_MMI)))
 
     if method == 'SFPDP_LMLT':
-        C_SFPDP_LMLT = C_dict['{}_{}'.format(method, name.lower())]
+       
         weight_SFPDP_LMLT = weights['SFPDP_LMLT']
 
         weightSum_SFPDP_LMLT = np.sum(np.sum(weight_SFPDP_LMLT))
@@ -107,7 +99,7 @@ def perturb_laplace(p, epsilon, K, Times, name, method):
 
         scales_SFPDP_LMLT_mask = np.isinf(scales_SFPDP_LMLT)
         scales_SFPDP_LMLT = np.where(scales_SFPDP_LMLT_mask, 0, scales_SFPDP_LMLT)
-        scales_SFPDP_LMLT = scales_SFPDP_LMLT / C_SFPDP_LMLT
+        scales_SFPDP_LMLT = scales_SFPDP_LMLT 
 
         noise_sample_SFPDP_LMLT = np.zeros_like(A)
         for s in range(n):
