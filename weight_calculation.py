@@ -57,7 +57,7 @@ def weightSortCalculation(U, V, W_L, name):
         for t in range(n):
             if s != t:
                 I_st = cp.zeros((n, n))
-                I_st[s][t] = 1
+                I_st[s][t] = -1
                 I_st[s][s] = 1
 
                 inner_left_list = cp.array([U_gpu[j].T @ I_st @ V_gpu[j] for j in range(n)])
@@ -157,7 +157,7 @@ def caculateWeight_SFPDP(U, V, W_L, p, sensitivity, name):
             if s != t:
                 q = sortIndex_array[s][t]
                 I_st = cp.zeros((n, n))
-                I_st[s][t] = 1
+                I_st[s][t] = -1
                 I_st[s][s] = 1
 
                 inner_left_list = cp.array([U_gpu[j].T @ I_st @ V_gpu[j] for j in range(n)])
@@ -243,7 +243,7 @@ def caculateWeight_SFPDP_MMI(U, V, W_L, sensitivity, name):
         for t in range(n):
             if s != t:
                 I_st = cp.zeros((n, n))
-                I_st[s][t] = 1
+                I_st[s][t] = -1
                 I_st[s][s] = 1
 
                 # 优化后的inner_left计算
@@ -356,7 +356,7 @@ def caculateWeight_SFPDP_LMLT(U, V, W_L, sensitivity, name):
         for t in range(n):
             if s != t:
                 I_st = cp.zeros((n, n))
-                I_st[s][t] = 1
+                I_st[s][t] = -1
                 I_st[s][s] = 1
 
                 inner_left_list = cp.array([U_gpu[j].T @ I_st @ V_gpu[j] for j in range(n)])
